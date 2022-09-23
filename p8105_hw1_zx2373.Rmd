@@ -1,0 +1,106 @@
+---
+title: "p8105_hw1_zx2373"
+author: "Ziyan Xu"
+date: "2022-09-22"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo = TRUE)
+
+```
+
+```{r echo = FALSE, message=FALSE}
+
+library(ggplot2)
+library(tidyverse)
+library(palmerpenguins)
+
+```
+
+#Problem 1
+
+###Description of data
+
+```{r messege = FALSE}
+
+data("penguins", package = "palmerpenguins")
+
+skimr::skim(penguins)
+  
+nrow = nrow(penguins)
+ncol = ncol(penguins)
+
+penguins_colnames = colnames(penguins)
+
+b = pull(penguins, var = flipper_length_mm)
+mean_flipper = mean(b,na.rm = TRUE)
+
+```
+
+**There are `r n_row` rows and `r n_col` columns in the dataset. **
+**It includes `r penguins_colomns` in total 8 variables. The mean of flipper length is `r mean_flipper`. **
+**The other information which might be important to better understand this dataset is in the summary below.**
+
+```{r}
+
+summary(penguins)
+
+```
+
+###Scatterplot
+
+```{r warning=FALSE}
+
+ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm)) + geom_point(aes(color = species))
+ggsave("Scatterplot.pdf",height = 4,width = 4)
+
+```
+
+
+#Problem 2
+
+###Create a data frame
+```{r messege=TRUE}
+
+hw1_df = tibble(
+  vec_numeric = rnorm(10),
+  vec_logical = vec_numeric > 0,
+  vec_char = rep(c("a", "b", "c", "d", "e"), length.out = 10),
+  vec_factor = factor(rep(c("high","middle","low"), length.out = 10))
+  )
+
+```
+
+###Mean of variable
+```{r warning=FALSE, message=FALSE}
+
+mean(pull(hw1_df,vec_numeric))
+mean(pull(hw1_df,vec_logical))
+mean(pull(hw1_df,vec_char))
+mean(pull(hw1_df,vec_factor))
+
+```
+
+**The mean of each variable in my dataframe are `r mean_change`, `r mean_logic`, `r mean_character`,`r mean_factor`. The means of character and factor vector are invalid**
+
+###Convert logical, character and factor vectors into numbers
+
+```{r convert, results = 'hide'}
+x = as.numeric(pull(hw1_df, vec_logical))
+y = as.numeric(pull(hw1_df, vec_char))
+z = as.numeric(pull(hw1_df, vec_factor))
+```
+
+
+###Take the mean again
+```{r mean_convert, echo = FALSE}
+mean(pull(hm1_df, vec_numeric))
+mean(x)
+mean(y)
+mean(z)
+```
+
+**After converting, the logical vector remains the same, which is "True = 1*" and "False = 0".** **The factor vector generates the numerical mean. But the character variable cannot be converted into numbers and are left as NA.**
+
