@@ -5,17 +5,11 @@ date: "2022-09-22"
 output: github_document
 ---
 
-```{r setup, include=FALSE}
-
-knitr::opts_chunk$set(echo = TRUE)
-
-```
 
 ```{r echo = FALSE, message=FALSE}
 
 library(ggplot2)
 library(tidyverse)
-library(palmerpenguins)
 
 ```
 
@@ -27,21 +21,16 @@ library(palmerpenguins)
 
 data("penguins", package = "palmerpenguins")
 
-skimr::skim(penguins)
-  
-nrow = nrow(penguins)
-ncol = ncol(penguins)
-
-penguins_colnames = colnames(penguins)
-
-b = pull(penguins, var = flipper_length_mm)
-mean_flipper = mean(b,na.rm = TRUE)
-
 ```
 
-**There are `r n_row` rows and `r n_col` columns in the dataset. **
-**It includes `r penguins_colomns` in total 8 variables. The mean of flipper length is `r mean_flipper`. **
-**The other information which might be important to better understand this dataset is in the summary below.**
+* This is a tibble data frame about penguins with names of variables:  `r names(penguins)`.
+* The bill length has a range of `r range(pull(penguins, bill_length_mm), na.rm = TRUE)` and a mean of `r mean(pull(penguins, bill_length_mm), na.rm = TRUE)` mm.
+* The bill depth has a range of `r range(pull(penguins, bill_depth_mm), na.rm = TRUE)` and a mean of `r mean(pull(penguins, bill_depth_mm), na.rm = TRUE)` mm.
+* The flipper length has a range of `r range(pull(penguins, flipper_length_mm), na.rm = TRUE)`.
+* The body mass has a range of `r range(pull(penguins, body_mass_g), na.rm = TRUE)` and a mean of `r mean(pull(penguins, body_mass_g), na.rm = TRUE)` g.
+* There are `r nrow(penguins)` rows and `r ncol(penguins)` columns in the dataset.
+* The mean flipper length is `r mean(pull(penguins, flipper_length_mm), na.rm = TRUE)` mm after removing all missing data in the flipper length column.
+
 
 ```{r}
 
@@ -83,7 +72,8 @@ mean(pull(hw1_df,vec_factor))
 
 ```
 
-**The mean of each variable in my dataframe are `r mean_change`, `r mean_logic`, `r mean_character`,`r mean_factor`. The means of character and factor vector are invalid**
+* When I try to take the means of character vector and factor vector, it returns NAs because argument is not numeric or logical.
+
 
 ###Convert logical, character and factor vectors into numbers
 
@@ -91,15 +81,6 @@ mean(pull(hw1_df,vec_factor))
 x = as.numeric(pull(hw1_df, vec_logical))
 y = as.numeric(pull(hw1_df, vec_char))
 z = as.numeric(pull(hw1_df, vec_factor))
-```
-
-
-###Take the mean again
-```{r mean_convert, echo = FALSE}
-mean(pull(hm1_df, vec_numeric))
-mean(x)
-mean(y)
-mean(z)
 ```
 
 **After converting, the logical vector remains the same, which is "True = 1*" and "False = 0".** **The factor vector generates the numerical mean. But the character variable cannot be converted into numbers and are left as NA.**
